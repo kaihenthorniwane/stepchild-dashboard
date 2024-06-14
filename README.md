@@ -1,5 +1,5 @@
-![Stepchild Light Mode Logo](https://kaihenthorniwane.github.io/stepchild-dashboard/graphics/stepdash-light-mode-cover.svg#gh-light-mode-only)
-![Stepchild Dark Mode Logo](https://kaihenthorniwane.github.io/stepchild-dashboard/graphics/stepdash-dark-mode-cover.svg#gh-dark-mode-only)
+![Stepchild Light Mode Logo](readme/stepdash-light-mode-cover.svg#gh-light-mode-only)
+![Stepchild Dark Mode Logo](readme/stepdash-dark-mode-cover.svg#gh-dark-mode-only)
 
 # Stepchild Dashboard
 
