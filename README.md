@@ -1,3 +1,5 @@
+![Stepchild Dashboard Cover](https://raw.githubusercontent.com/kaihenthorniwane/stepchild-dashboard/main/public/graphics/readme-cover.png)
+
 # Stepchild Dashboard
 
 Welcome to the **Stepchild Dashboard** documentation! This README will guide you through the setup, deployment, and usage of the Stepchild Dashboard, a web interface designed to interact with the Stepchild synthesizer.
