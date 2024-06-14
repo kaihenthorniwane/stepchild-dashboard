@@ -1,4 +1,5 @@
-![Stepchild Dashboard Cover](https://raw.githubusercontent.com/kaihenthorniwane/stepchild-dashboard/main/public/graphics/readme-cover.png)
+![Stepchild Light Mode Logo](image_address#gh-light-mode-only)
+![Stepchild Dark Mode Logo](image_address#gh-dark-mode-only)
 
 # Stepchild Dashboard
 
