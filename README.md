@@ -90,10 +90,6 @@ To learn more about Next.js, take a look at the following resources:
 
 If you would like to contribute to the project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
 If you have any questions or need further assistance, feel free to open an issue in the repository.
