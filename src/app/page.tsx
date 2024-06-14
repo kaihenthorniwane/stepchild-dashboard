@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import { useFiles, loadDataFromStepchild } from "./context/FilesContext";
+import { useFiles } from "./context/FilesContext";
+import { loadTestData } from "@/stepchild_interface/test_data_functions";
 
 function arrayBufferToString(buffer: ArrayBuffer) {
   const decoder = new TextDecoder("utf-8");
@@ -12,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const files = await loadDataFromStepchild();
+      const files = await loadTestData();
       dispatch({ type: "SET_FILES", payload: files });
     };
 
