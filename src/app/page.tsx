@@ -2,6 +2,11 @@
 import { useEffect } from "react";
 import { useFiles, loadDataFromStepchild } from "./context/FilesContext";
 
+function arrayBufferToString(buffer: ArrayBuffer) {
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(buffer);
+}
+
 export default function Home() {
   const { state, dispatch } = useFiles();
 
@@ -21,6 +26,7 @@ export default function Home() {
           <p>Name: {file.name}</p>
           <p>Path: {file.path}</p>
           <p>File Size: {file.fileSize} bytes</p>
+          <p>Data: {arrayBufferToString(file.data)}</p>
         </div>
       ))}
     </div>

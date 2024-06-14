@@ -13,6 +13,7 @@ export type StepchildFile = {
   name: string;
   fileSize: number;
   id: number;
+  data: ArrayBuffer;
 };
 
 export type StepchildState = {
@@ -23,17 +24,57 @@ const initialState: StepchildState = {
   files: [],
 };
 
-export async function loadDataFromStepchild(): Promise<StepchildFile[]> {
+// Helper function to generate random ArrayBuffer
+const generateRandomArrayBuffer = (size: number): ArrayBuffer => {
+  const buffer = new ArrayBuffer(size);
+  const view = new Uint8Array(buffer);
+  for (let i = 0; i < size; i++) {
+    view[i] = Math.floor(Math.random() * 256);
+  }
+  return buffer;
+};
+
+export const loadDataFromStepchild = async (): Promise<StepchildFile[]> => {
   // Mock function to simulate loading data from Stepchild
   const data: StepchildFile[] = [
-    { path: "root/saves/save1.child", name: "Save 1", fileSize: 1024, id: 1 },
-    { path: "root/saves/save2.child", name: "Save 2", fileSize: 2048, id: 2 },
-    { path: "root/saves/save3.child", name: "Save 3", fileSize: 512, id: 3 },
-    { path: "root/saves/save4.child", name: "Save 4", fileSize: 256, id: 4 },
-    { path: "root/saves/save5.child", name: "Save 5", fileSize: 4096, id: 5 },
+    {
+      path: "root/saves/save1.child",
+      name: "Save 1",
+      fileSize: 1024,
+      id: 1,
+      data: generateRandomArrayBuffer(1024),
+    },
+    {
+      path: "root/saves/save2.child",
+      name: "Save 2",
+      fileSize: 2048,
+      id: 2,
+      data: generateRandomArrayBuffer(2048),
+    },
+    {
+      path: "root/saves/save3.child",
+      name: "Save 3",
+      fileSize: 512,
+      id: 3,
+      data: generateRandomArrayBuffer(512),
+    },
+    {
+      path: "root/saves/save4.child",
+      name: "Save 4",
+      fileSize: 256,
+      id: 4,
+      data: generateRandomArrayBuffer(256),
+    },
+    {
+      path: "root/saves/save5.child",
+      name: "Save 5",
+      fileSize: 4096,
+      id: 5,
+      data: generateRandomArrayBuffer(4096),
+    },
   ];
   return new Promise((resolve) => setTimeout(() => resolve(data), 1000)); // Simulate async call
-}
+};
 
 type Action = { type: "SET_FILES"; payload: StepchildFile[] };
 
