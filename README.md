@@ -5,8 +5,6 @@
 
 Welcome to the **Stepchild Dashboard** documentation! This README will guide you through the setup, deployment, and usage of the Stepchild Dashboard, a web interface designed to interact with the Stepchild synthesizer.
 
-## Deployment
-
 You can access the live deployment of the Stepchild Dashboard here: [Stepchild Dashboard](https://kaihenthorniwane.github.io/stepchild-dashboard/)
 
 ## Design
@@ -18,6 +16,18 @@ The design for the Stepchild Dashboard was created in Figma. You can view and in
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+=======
+## Features
+***completed***
+- dark mode/light mode logo
+
+***wip***
+- view+download .child files from stepchild
+- upload firmware to stepchild
+- .child file to .MIDI converter
+- file uploader
+- .MIDI to .child file converter
+>>>>>>> Stashed changes
 
 ## Contributing
 
