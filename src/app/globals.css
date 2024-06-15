@@ -3,4 +3,22 @@
 @tailwind utilities;
 
 :root {
+  --bg-primary: #222222;
+  --text-primary: #ffffff;
+  --text-secondary: #c8c8c8;
+  --text-tertiary: #606060;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #222222;
+  --text-primary: #ffffff;
+  --text-secondary: #c8c8c8;
+  --text-tertiary: #606060;
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #606060;
+  --text-tertiary: #c8c8c8;
 }

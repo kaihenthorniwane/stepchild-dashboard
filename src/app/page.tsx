@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useFiles } from "./context/FilesContext";
 import { loadTestData } from "@/stepchild_interface/test_data_functions";
+import ThemeButton from "./components/theme/ThemeButton";
 
 function arrayBufferToString(buffer: ArrayBuffer) {
   const decoder = new TextDecoder("utf-8");
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <div>
+      <ThemeButton />
       {state.files.map((file) => (
         <div key={file.id} className="p-4">
           <p>Name: {file.name}</p>
