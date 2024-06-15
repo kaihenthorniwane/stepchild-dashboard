@@ -22,7 +22,7 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="p-5">
       <ThemeButton />
       {state.files.map((file) => (
         <div key={file.id} className="p-4">
