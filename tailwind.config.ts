@@ -41,7 +41,7 @@ const config: Config = {
         },
       },
       animation: {
-        "slide-in-right": "slide-in-right 0.2s  forwards",
+        "slide-in-right": "slide-in-right 0.4s  forwards",
       },
     },
   },
