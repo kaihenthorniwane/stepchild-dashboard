@@ -14,6 +14,21 @@ type Props = {
   sortConfig: SortConfig | null;
 };
 
+type TableLayout = {
+  breakpoint: "default" | "minimal";
+  columnWidths: {
+    icon: number;
+    name: number;
+    fileName: number;
+    fileSize: number;
+  };
+  minimalColumnWidths: {
+    icon: number;
+    name: number;
+    fileSize: number;
+  };
+};
+
 function formatPath(path: string): string {
   return path.split("/")[path.split("/").length - 1];
 }
@@ -23,11 +38,19 @@ export default function FilesTable({
   requestSort,
   sortConfig,
 }: Props) {
-  const [columnWidths, setColumnWidths] = useState({
-    icon: 75, //fixed
-    name: 0, //dynamic
-    fileName: 0, //dynamic
-    fileSize: 150, //fixed
+  const [tableLayout, setTableLayout] = useState<TableLayout>({
+    breakpoint: "default",
+    columnWidths: {
+      icon: 75, //fixed
+      name: 0, //dynamic
+      fileName: 0, //dynamic
+      fileSize: 150, //fixed}
+    },
+    minimalColumnWidths: {
+      icon: 75, //fixed
+      name: 0, //dynamic
+      fileSize: 150, //fixed
+    },
   });
 
   const tableRef = useRef<HTMLDivElement>(null);
@@ -35,11 +58,11 @@ export default function FilesTable({
 
   const handleResize = useCallback(
     (key: "name", delta: number) => {
-      setColumnWidths((prevWidths) => {
+      setTableLayout((prevLayout) => {
         const tableWidth = tableRef.current ? tableRef.current.offsetWidth : 0;
         const newWidths = {
-          ...prevWidths,
-          [key]: Math.max(prevWidths[key] + delta, 50),
+          ...prevLayout.columnWidths,
+          [key]: Math.max(prevLayout.columnWidths[key] + delta, 50),
         };
 
         const newUsedWidth =
@@ -52,27 +75,47 @@ export default function FilesTable({
           newWidths.fileName = 50;
         }
 
-        return newWidths;
+        return { ...prevLayout, columnWidths: newWidths };
       });
     },
-    [setColumnWidths]
+    [setTableLayout]
   );
 
   useEffect(() => {
-    const updateColumnWidths = () => {
+    const updatetableLayout = () => {
       if (tableRef.current) {
         const tableRect = tableRef.current.getBoundingClientRect();
         const tableWidth = tableRect.width;
 
-        setColumnWidths((prevWidths) => {
+        setTableLayout((prevLayout) => {
+          const prevWidths = prevLayout.columnWidths;
           const prevFileNameWidth = prevWidths.fileName;
           const prevNameWidth = prevWidths.name;
           const prevTotalWidth = prevFileNameWidth + prevNameWidth;
-          const prevFileNameRatio = prevFileNameWidth / prevTotalWidth;
-          const prevNameRatio = prevNameWidth / prevTotalWidth;
           const fileSizeWidth = prevWidths.fileSize;
           const iconWidth = prevWidths.icon;
           const currentRemainingWidth = tableWidth - fileSizeWidth - iconWidth;
+          const minimalNameWidth = currentRemainingWidth;
+
+          if (tableWidth < 768) {
+            return {
+              breakpoint: "minimal",
+              columnWidths: {
+                icon: iconWidth,
+                name: prevNameWidth,
+                fileName: prevFileNameWidth,
+                fileSize: fileSizeWidth,
+              },
+              minimalColumnWidths: {
+                icon: iconWidth,
+                name: minimalNameWidth,
+                fileSize: fileSizeWidth,
+              },
+            };
+          }
+
+          const prevFileNameRatio = prevFileNameWidth / prevTotalWidth;
+          const prevNameRatio = prevNameWidth / prevTotalWidth;
           const fileNameWidth =
             prevWidths.fileName === 0
               ? currentRemainingWidth / 2
@@ -83,28 +126,51 @@ export default function FilesTable({
               : currentRemainingWidth * prevNameRatio;
 
           return {
-            icon: iconWidth,
-            name: nameWidth,
-            fileName: fileNameWidth,
-            fileSize: fileSizeWidth,
+            breakpoint: "default",
+            columnWidths: {
+              icon: iconWidth,
+              name: nameWidth,
+              fileName: fileNameWidth,
+              fileSize: fileSizeWidth,
+            },
+            minimalColumnWidths: {
+              icon: iconWidth,
+              name: minimalNameWidth,
+              fileSize: fileSizeWidth,
+            },
           };
         });
       }
     };
 
-    updateColumnWidths();
+    const resizeObserver = new ResizeObserver(() => {
+      updatetableLayout();
+    });
 
-    window.addEventListener("resize", updateColumnWidths);
-    return () => window.removeEventListener("resize", updateColumnWidths);
+    if (tableRef.current) {
+      resizeObserver.observe(tableRef.current);
+    }
+
+    return () => {
+      if (tableRef.current) {
+        resizeObserver.unobserve(tableRef.current);
+      }
+    };
   }, []);
 
   return (
     <div ref={tableRef} className="relative overflow-y-auto overflow-x-hidden">
-      <TableResizer
-        ref={nameResizeRef}
-        onResize={(delta) => handleResize("name", delta)}
-        style={{ left: `${columnWidths.name + columnWidths.icon}px` }}
-      />
+      {tableLayout.breakpoint === "default" && (
+        <TableResizer
+          ref={nameResizeRef}
+          onResize={(delta) => handleResize("name", delta)}
+          style={{
+            left: `${
+              tableLayout.columnWidths.name + tableLayout.columnWidths.icon
+            }px`,
+          }}
+        />
+      )}
       <table className="min-w-full table-fixed">
         <thead>
           <tr>
@@ -112,21 +178,27 @@ export default function FilesTable({
             <TableHeader
               columnKey="name"
               label="Name"
-              width={columnWidths.name}
+              width={
+                tableLayout.breakpoint === "default"
+                  ? tableLayout.columnWidths.name
+                  : tableLayout.minimalColumnWidths.name
+              }
               requestSort={requestSort}
               sortConfig={sortConfig}
             />
-            <TableHeader
-              columnKey="path"
-              label="Filename"
-              width={columnWidths.fileName}
-              requestSort={requestSort}
-              sortConfig={sortConfig}
-            />
+            {tableLayout.breakpoint === "default" && (
+              <TableHeader
+                columnKey="path"
+                label="Filename"
+                width={tableLayout.columnWidths.fileName}
+                requestSort={requestSort}
+                sortConfig={sortConfig}
+              />
+            )}
             <TableHeader
               columnKey="fileSize"
               label="Size"
-              width={columnWidths.fileSize}
+              width={tableLayout.columnWidths.fileSize}
               requestSort={requestSort}
               sortConfig={sortConfig}
             />
@@ -141,19 +213,24 @@ export default function FilesTable({
               <td
                 className="p-3"
                 style={{
-                  width: columnWidths.icon,
-                  maxWidth: columnWidths.icon,
+                  width: tableLayout.columnWidths.icon,
+                  maxWidth: tableLayout.columnWidths.icon,
                 }}
               >
                 <MusicFileIcon />
               </td>
-              <TableCell width={columnWidths.name} content={file.name} />
               <TableCell
-                width={columnWidths.fileName}
-                content={formatPath(file.path)}
+                width={tableLayout.columnWidths.name}
+                content={file.name}
               />
+              {tableLayout.breakpoint === "default" && (
+                <TableCell
+                  width={tableLayout.columnWidths.fileName}
+                  content={formatPath(file.path)}
+                />
+              )}
               <TableCell
-                width={columnWidths.fileSize}
+                width={tableLayout.columnWidths.fileSize}
                 content={`${file.fileSize} bytes`}
               />
               <td className="hidden group-hover:flex absolute top-0 right-0 bottom-0 gap-2 items-center justify-end z-20">

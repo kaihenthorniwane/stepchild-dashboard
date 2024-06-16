@@ -48,7 +48,7 @@ export default function FilesPanel({ files }: Props) {
   };
 
   return (
-    <div className="p-6 min-w-0 min-h-0 0">
+    <div className="p-6 min-w-0 min-h-0">
       <span className="font-slab text-56px text-left">Files</span>
       <FilesTable
         sortedFiles={sortedFiles}
