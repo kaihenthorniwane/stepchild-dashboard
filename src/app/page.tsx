@@ -2,12 +2,7 @@
 import { useEffect } from "react";
 import { useFiles } from "./context/FilesContext";
 import { loadTestData } from "@/stepchild_interface/test_data_functions";
-import ThemeButton from "./components/theme/ThemeButton";
-
-function arrayBufferToString(buffer: ArrayBuffer) {
-  const decoder = new TextDecoder("utf-8");
-  return decoder.decode(buffer);
-}
+import FilesPanel from "./panels/FilesPanel";
 
 export default function Home() {
   const { state, dispatch } = useFiles();
@@ -22,16 +17,13 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div className="p-5">
-      <ThemeButton />
-      {state.files.map((file) => (
-        <div key={file.id} className="p-4">
-          <p>Name: {file.name}</p>
-          <p>Path: {file.path}</p>
-          <p>File Size: {file.fileSize} bytes</p>
-          <p>Data: {arrayBufferToString(file.data)}</p>
+    <div className="fixed left-0 top-0 right-0 bottom-0 flex flex-col min-h-0">
+      <div className="grid grid-cols-[2fr,1fr] h-full w-full">
+        <FilesPanel files={state.files} />
+        <div className="p-5 min-h-0 min-w-0">
+          <div className="border-2 border-textTertiary"></div>
         </div>
-      ))}
+      </div>
     </div>
   );
 }

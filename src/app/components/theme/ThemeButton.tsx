@@ -9,18 +9,6 @@ export default function ThemeButton() {
       <PixelButton onClick={toggleTheme} mode="fill" size="large">
         Switch to {theme === "light" ? "Dark" : "Light"} Mode
       </PixelButton>
-
-      <PixelButton onClick={toggleTheme} mode="fill" size="small">
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
-      </PixelButton>
-
-      <PixelButton onClick={toggleTheme} mode="outline" size="large">
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
-      </PixelButton>
-
-      <PixelButton onClick={toggleTheme} mode="outline" size="small">
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
-      </PixelButton>
     </div>
   );
 }

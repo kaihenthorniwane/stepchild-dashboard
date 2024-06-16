@@ -22,3 +22,44 @@
   --text-secondary: #606060;
   --text-tertiary: #c8c8c8;
 }
+
+/* Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-tertiary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-secondary);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--text-primary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) var(--bg-primary);
+}
+
+/* Firefox track and thumb states */
+* {
+  scrollbar-color: var(--text-tertiary) var(--bg-primary);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  scrollbar-color: var(--text-secondary) var(--bg-primary);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  scrollbar-color: var(--text-primary) var(--bg-primary);
+}

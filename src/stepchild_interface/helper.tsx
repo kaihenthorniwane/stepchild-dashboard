@@ -9,3 +9,8 @@ export const isStepchildFile = (item: any): item is StepchildFile => {
     item.data instanceof ArrayBuffer
   );
 };
+
+function arrayBufferToString(buffer: ArrayBuffer) {
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(buffer);
+}
