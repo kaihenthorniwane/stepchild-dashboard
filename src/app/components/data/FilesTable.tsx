@@ -24,19 +24,17 @@ export default function FilesTable({
   sortConfig,
 }: Props) {
   const [columnWidths, setColumnWidths] = useState({
-    icon: 75,
-    name: 200,
-    fileName: 300,
-    fileSize: 150, // Fixed width for the last column
+    icon: 75, //fixed
+    name: 0, //dynamic
+    fileName: 0, //dynamic
+    fileSize: 150, //fixed
   });
 
   const tableRef = useRef<HTMLDivElement>(null);
   const nameResizeRef = useRef<HTMLDivElement>(null);
 
   const handleResize = useCallback(
-    (key: "name" | "fileName", delta: number) => {
-      if (key === "fileName") return; // Prevent resizing of fileName column
-
+    (key: "name", delta: number) => {
       setColumnWidths((prevWidths) => {
         const tableWidth = tableRef.current ? tableRef.current.offsetWidth : 0;
         const newWidths = {
@@ -74,10 +72,15 @@ export default function FilesTable({
           const prevNameRatio = prevNameWidth / prevTotalWidth;
           const fileSizeWidth = prevWidths.fileSize;
           const iconWidth = prevWidths.icon;
+          const currentRemainingWidth = tableWidth - fileSizeWidth - iconWidth;
           const fileNameWidth =
-            (tableWidth - fileSizeWidth - iconWidth) * prevFileNameRatio;
+            prevWidths.fileName === 0
+              ? currentRemainingWidth / 2
+              : currentRemainingWidth * prevFileNameRatio;
           const nameWidth =
-            (tableWidth - fileSizeWidth - iconWidth) * prevNameRatio;
+            prevWidths.name === 0
+              ? currentRemainingWidth / 2
+              : currentRemainingWidth * prevNameRatio;
 
           return {
             icon: iconWidth,
