@@ -11,8 +11,8 @@ type Props = {
   sortConfig: SortConfig | null;
 };
 
-function formatPath(path: string): string[] {
-  return path.split("/");
+function formatPath(path: string): string {
+  return path.split("/")[path.split("/").length - 1];
 }
 
 export default function FilesTable({
@@ -22,7 +22,7 @@ export default function FilesTable({
 }: Props) {
   const [columnWidths, setColumnWidths] = useState({
     name: 200,
-    path: 300,
+    fileName: 300,
     fileSize: 100, // Initial width for the last column
   });
 
@@ -31,7 +31,7 @@ export default function FilesTable({
   const pathResizeRef = useRef<HTMLDivElement>(null);
 
   const handleResize = useCallback(
-    (key: "name" | "path", delta: number) => {
+    (key: "name" | "fileName", delta: number) => {
       setColumnWidths((prevWidths) => {
         const tableWidth = tableRef.current ? tableRef.current.offsetWidth : 0;
         const newWidths = {
@@ -39,7 +39,7 @@ export default function FilesTable({
           [key]: Math.max(prevWidths[key] + delta, 50), // Ensuring a minimum width
         };
 
-        const newUsedWidth = newWidths.name + newWidths.path;
+        const newUsedWidth = newWidths.name + newWidths.fileName;
         newWidths.fileSize = tableWidth - newUsedWidth;
 
         // Restrict dragging beyond table width
@@ -69,7 +69,7 @@ export default function FilesTable({
 
         setColumnWidths({
           name: nameWidth,
-          path: pathWidth,
+          fileName: pathWidth,
           fileSize: fileSizeWidth,
         });
       }
@@ -85,8 +85,8 @@ export default function FilesTable({
     <div ref={tableRef} className="relative overflow-y-auto overflow-x-hidden">
       <TableResizer
         ref={pathResizeRef}
-        onResize={(delta) => handleResize("path", delta)}
-        style={{ left: `${columnWidths.name + columnWidths.path}px` }}
+        onResize={(delta) => handleResize("fileName", delta)}
+        style={{ left: `${columnWidths.name + columnWidths.fileName}px` }}
       />
       <TableResizer
         ref={nameResizeRef}
@@ -115,10 +115,24 @@ export default function FilesTable({
                 </div>
               </Clickable>
             </th>
-            <th style={{ width: `${columnWidths.path}px` }}>
-              <div className="flex font-regular text-12px uppercase text-textSecondary p-2">
-                Path
-              </div>
+            <th style={{ width: `${columnWidths.fileName}px` }}>
+              <Clickable
+                onClick={() => requestSort("path")}
+                mode="secondary"
+                additionalClasses="w-full flex items-center font-regular text-12px uppercase p-2 gap-1.5"
+              >
+                <span>Filename</span>
+                <div className="pb-0.5">
+                  <SmallDropdownIcon
+                    isOpen={
+                      sortConfig
+                        ? sortConfig.key === "path" &&
+                          sortConfig.direction === "ascending"
+                        : false
+                    }
+                  />
+                </div>
+              </Clickable>
             </th>
             <th style={{ width: `${columnWidths.fileSize}px` }}>
               <Clickable
@@ -158,28 +172,12 @@ export default function FilesTable({
               </td>
               <td
                 style={{
-                  width: `${columnWidths.path}px`,
-                  maxWidth: `${columnWidths.path}px`,
+                  width: `${columnWidths.fileName}px`,
+                  maxWidth: `${columnWidths.fileName}px`,
                 }}
                 className="p-2 truncate"
               >
-                <div className="flex items-center gap-1">
-                  {formatPath(file.path).map((segment, index) => (
-                    <span
-                      key={index}
-                      className={`${
-                        index === formatPath(file.path).length - 1
-                          ? "truncate"
-                          : "flex items-center gap-1"
-                      }`}
-                    >
-                      {segment}
-                      {index < formatPath(file.path).length - 1 && (
-                        <span>/</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
+                {formatPath(file.path)}
               </td>
               <td
                 style={{
@@ -188,7 +186,7 @@ export default function FilesTable({
                 }}
                 className="p-2 truncate"
               >
-                <span className="">{file.fileSize} bytes</span>
+                {file.fileSize} bytes
               </td>
             </tr>
           ))}
