@@ -45,4 +45,6 @@ const TableResizer = forwardRef<HTMLDivElement, ResizerProps>(
   }
 );
 
+TableResizer.displayName = "TableResizer";
+
 export default TableResizer;
