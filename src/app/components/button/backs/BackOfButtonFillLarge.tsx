@@ -7,9 +7,10 @@ export default function BackOfButtonFillLarge({ mode }: Props) {
     <div
       className={`grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
     w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[-2]
+    rounded-full
     ${
       mode === "fill"
-        ? "text-textPrimary group-hover/button:text-textSecondary"
+        ? "text-textPrimary group-hover/button:text-textSecondary bg-textPrimary group-hover/button:bg-textSecondary "
         : "text-bgPrimary"
     }`}
     >

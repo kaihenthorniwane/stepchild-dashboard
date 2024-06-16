@@ -2,19 +2,20 @@ import React from "react";
 
 type TableCellProps = {
   width: number;
-  content: string;
+  className?: string;
+  children: React.ReactNode;
 };
 
-const TableCell: React.FC<TableCellProps> = ({ width, content }) => {
+const TableCell = ({ width, children, className }: TableCellProps) => {
   return (
     <td
       style={{
         width: `${width}px`,
         maxWidth: `${width}px`,
       }}
-      className="p-2 truncate"
+      className={className || "p-2 truncate"}
     >
-      {content}
+      {children}
     </td>
   );
 };

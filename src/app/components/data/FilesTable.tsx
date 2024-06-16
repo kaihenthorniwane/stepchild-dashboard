@@ -97,7 +97,7 @@ export default function FilesTable({
           const currentRemainingWidth = tableWidth - fileSizeWidth - iconWidth;
           const minimalNameWidth = currentRemainingWidth;
 
-          if (tableWidth < 768) {
+          if (tableWidth < 650) {
             return {
               breakpoint: "minimal",
               columnWidths: {
@@ -208,35 +208,29 @@ export default function FilesTable({
           {sortedFiles.map((file) => (
             <tr
               key={file.id}
-              className="border-textTertiary border-b-2 relative group"
+              className="border-textTertiary border-b-2 relative group "
             >
-              <td
-                className="p-3"
-                style={{
-                  width: tableLayout.columnWidths.icon,
-                  maxWidth: tableLayout.columnWidths.icon,
-                }}
-              >
+              <TableCell width={tableLayout.columnWidths.icon} className="p-3">
                 <MusicFileIcon />
-              </td>
-              <TableCell
-                width={tableLayout.columnWidths.name}
-                content={file.name}
-              />
+              </TableCell>
+
+              <TableCell width={tableLayout.columnWidths.name}>
+                {file.name}
+              </TableCell>
               {tableLayout.breakpoint === "default" && (
-                <TableCell
-                  width={tableLayout.columnWidths.fileName}
-                  content={formatPath(file.path)}
-                />
+                <TableCell width={tableLayout.columnWidths.fileName}>
+                  {formatPath(file.path)}
+                </TableCell>
               )}
-              <TableCell
-                width={tableLayout.columnWidths.fileSize}
-                content={`${file.fileSize} bytes`}
-              />
-              <td className="hidden group-hover:flex absolute top-0 right-0 bottom-0 gap-2 items-center justify-end z-20">
-                <PixelButton mode="outline">Download</PixelButton>
-                <PixelButton mode="fill">Preview</PixelButton>
-                <DitherGroup />
+              <TableCell width={tableLayout.columnWidths.fileSize}>
+                {`${file.fileSize} bytes`}
+              </TableCell>
+              <td className="group relative min-w-0 max-w-0 w-0 top-auto bottom-auto">
+                <div className="hidden group-hover:flex absolute min-w-max top-0 right-0 bottom-0 gap-2 items-center justify-end z-20">
+                  <PixelButton mode="outline">Download</PixelButton>
+                  <PixelButton mode="fill">Preview</PixelButton>
+                  <DitherGroup />
+                </div>
               </td>
             </tr>
           ))}
