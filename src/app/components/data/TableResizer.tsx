@@ -38,7 +38,7 @@ const TableResizer = forwardRef<HTMLDivElement, ResizerProps>(
           onMouseDown={handleMouseDown}
           className="absolute border-transparent cursor-col-resize top-0 bottom-0 -left-2 -right-2 group"
         >
-          <div className="absolute top-0 right-1.5 bottom-0 left-1.5 group-hover:bg-textSecondary"></div>
+          <div className="absolute top-0 right-1.5 bottom-0 left-1.5 group-hover:bg-textSecondary "></div>
         </div>
       </div>
     );
