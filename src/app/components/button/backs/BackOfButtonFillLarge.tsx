@@ -9,8 +9,8 @@ export default function BackOfButtonFillLarge({ mode }: Props) {
     w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[-2]
     ${
       mode === "fill"
-        ? "text-textPrimary group-hover:text-textSecondary"
-        : "text-bgPrimary group-hover:text-textTertiary"
+        ? "text-textPrimary group-hover/button:text-textSecondary"
+        : "text-bgPrimary"
     }`}
     >
       <TopLeft rotation={0} />

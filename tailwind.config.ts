@@ -29,6 +29,20 @@ const config: Config = {
         textSecondary: "var(--text-secondary)",
         textTertiary: "var(--text-tertiary)",
       },
+      keyframes: {
+        "slide-in-right": {
+          "0%": { transform: "translateX(20px)" },
+          "33.3%": { transform: "translateX(20px)" },
+          "33.4%": { transform: "translateX(10px)" },
+          "66.6%": { transform: "translateX(10px)" },
+          "66.7%": { transform: "translateX(2px)" },
+          "99.9%": { transform: "translateX(2px)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        "slide-in-right": "slide-in-right 0.2s  forwards",
+      },
     },
   },
   plugins: [],

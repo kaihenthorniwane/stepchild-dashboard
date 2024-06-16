@@ -5,6 +5,8 @@ import TableHeader from "./TableHeader";
 import TableCell from "./TableCell";
 import TableResizer from "./TableResizer";
 import MusicFileIcon from "../icons/MusicFileIcon";
+import DitherGroup from "./DitherGroup";
+import PixelButton from "../button/PixelButton";
 
 type Props = {
   sortedFiles: StepchildFile[];
@@ -131,7 +133,7 @@ export default function FilesTable({
           {sortedFiles.map((file) => (
             <tr
               key={file.id}
-              className="border-textTertiary border-b-2 relative"
+              className="border-textTertiary border-b-2 relative group"
             >
               <td
                 className="p-3"
@@ -151,6 +153,11 @@ export default function FilesTable({
                 width={columnWidths.fileSize}
                 content={`${file.fileSize} bytes`}
               />
+              <td className="hidden group-hover:flex absolute top-0 right-0 bottom-0 gap-2 items-center justify-end z-20">
+                <PixelButton mode="outline">Download</PixelButton>
+                <PixelButton mode="fill">Preview</PixelButton>
+                <DitherGroup />
+              </td>
             </tr>
           ))}
         </tbody>

@@ -3,7 +3,7 @@ export default function BackOfButtonOutlineLarge() {
     <div
       className="grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
     w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[-1]
-    text-textPrimary group-hover:text-textSecondary"
+    text-textPrimary group-hover/button:text-textSecondary"
     >
       <TopLeft rotation={0} />
       <Top rotation={0} />

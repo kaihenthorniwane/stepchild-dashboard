@@ -10,38 +10,34 @@ type ButtonProps = {
   size?: "small" | "large";
 };
 
-export default function Button({
+export default function PixelButton({
   children,
   mode = "fill",
   size = "large",
   onClick = () => {},
 }: ButtonProps) {
   return (
-    <button onClick={onClick} className="group h-min">
+    <button onClick={onClick} className="group/button h-min">
       <div
         className={`
         flex items-center relative
-        group-active:translate-y-0.5
+        group-active/button:translate-y-0.5
         ${
           size === "small"
-            ? "px-4 py-1 pt-2 font-pixel text-15px"
-            : "px-5 py-1 font-condensed text-32px"
+            ? "px-4 py-0.5 pt-1.5 font-pixel text-15px"
+            : "px-5 py-0.5 font-condensed text-32px"
         } 
         ${
           mode === "outline"
-            ? "text-textPrimary group-hover:text-textSecondary"
+            ? "text-textPrimary group-hover/button:text-textSecondary"
             : "text-bgPrimary "
         }`}
       >
         {children}
         {mode === "outline" && size === "large" && <BackOfButtonOutlineLarge />}
-        {mode === "fill" && size === "large" && (
-          <BackOfButtonFillLarge mode={mode} />
-        )}
+        {size === "large" && <BackOfButtonFillLarge mode={mode} />}
         {mode === "outline" && size === "small" && <BackOfButtonOutlineSmall />}
-        {mode === "fill" && size === "small" && (
-          <BackOfButtonFillSmall mode={mode} />
-        )}
+        {size === "small" && <BackOfButtonFillSmall mode={mode} />}
       </div>
     </button>
   );
