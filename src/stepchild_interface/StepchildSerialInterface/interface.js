@@ -1,12 +1,37 @@
+/*
+
+        Contains code for working with serial communication
+
+*/
+
+import p5 from 'p5';
+import "./libraries/p5.webserial.js";
+
 class StepchildSerialInterface{
     constructor(){
         this.connected = false;
-        this.port = createSerial();
+        this.port = p5.prototype.createSerial();
         this.options = {
             baudRate: 9600,
             bufferSize:255
         };
     }
+
+    static cmd =  {
+        DUMP_FILESYSTEM         : 0,
+        DUMP_SETTINGS           : 1,
+        ENTER_BOOTSEL           : 2,
+        ENABLE_SCREENCAPTURE    : 3,
+        DISABLE_SCREENCAPTURE   : 4,
+        DOWNLOAD_FILE           : 5,
+        SEND_NEXT_FILE_PLEASE   : 6,
+        SEND_FIRMWARE_VERSION   : 7,
+        RESET_SYSTEM            : 8,
+        EXIT_INTERFACE          : 9,
+        START_INTERFACE         :10,
+        SEND_FILE_COUNT         :11
+    };
+
     logPortInfo(){
         if(this.port.opened()){
             console.log("----- Connected! ---------")
@@ -49,10 +74,10 @@ class StepchildSerialInterface{
         });
     }
     async downloadFilesystem(){
-        this.sendCommand(cmd.SEND_FILE_COUNT);
+        this.sendCommand(this.cmd.SEND_FILE_COUNT);
         let numberOfFiles = await this.getFileCount();
         console.log("Grabbing "+numberOfFiles+" files from Stepchild...");
-        this.sendCommand(cmd.DUMP_FILESYSTEM);
+        this.sendCommand(this.cmd.DUMP_FILESYSTEM);
         for(let i = 0; i<numberOfFiles; i++){
             await this.downloadFile();
         }
@@ -87,37 +112,4 @@ class StepchildSerialInterface{
     }
 }
 
-const cmd =  {
-    DUMP_FILESYSTEM         : 0,
-    DUMP_SETTINGS           : 1,
-    ENTER_BOOTSEL           : 2,
-    ENABLE_SCREENCAPTURE    : 3,
-    DISABLE_SCREENCAPTURE   : 4,
-    DOWNLOAD_FILE           : 5,
-    SEND_NEXT_FILE_PLEASE   : 6,
-    SEND_FIRMWARE_VERSION   : 7,
-    RESET_SYSTEM            : 8,
-    EXIT_INTERFACE          : 9,
-    START_INTERFACE         :10,
-    SEND_FILE_COUNT         :11
-};
-
-// let port;
-// let dumpButton;
-// let connectButton;
-
-// function connect(){
-//     port.connect();
-// }
-
-// function dumpFiles(){
-//     port.downloadFilesystem();
-// }
-
-// function setup(){
-//     port = new StepchildSerialInterface();
-//     connectButton = createButton("connect");
-//     connectButton.mousePressed(connect);
-//     dumpButton = createButton("dump files");
-//     dumpButton.mousePressed(dumpFiles);
-// }
+export default StepchildSerialInterface;

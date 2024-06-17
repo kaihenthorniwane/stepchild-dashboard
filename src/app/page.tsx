@@ -2,6 +2,7 @@
 import { useFiles } from "./context/FilesContext";
 import FilesPanel from "./panels/FilesPanel";
 import EmptyStatePanel from "./panels/EmptyStatePanel";
+import P5Component from "../stepchild_interface/StepchildSerialInterface/p5Component.js";
 
 export default function Home() {
   const { state } = useFiles();
@@ -13,6 +14,7 @@ export default function Home() {
         <div className="p-5 min-h-0 min-w-0">
           <EmptyStatePanel />
         </div>
+        <P5Component/>
       </div>
     </div>
   );
