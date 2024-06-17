@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import PixelButton from "../button/PixelButton"; // Assuming this is the component for your pixel buttons
+import PixelButton from "../button/PixelButton";
 import DownloadIcon from "../icons/DownloadIcon";
 import BackOfButtonFillLarge from "../button/backs/BackOfButtonFillLarge";
 import BackOfButtonOutlineLarge from "../button/backs/BackOfButtonOutlineLarge";
@@ -11,9 +11,28 @@ type Props = {
 
 export default function DownloadMenuButton({ data, id }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuDirection, setMenuDirection] = useState("downwards");
   const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
+    if (menuRef.current) {
+      const menuRect = menuRef.current.getBoundingClientRect();
+      let ancestor: HTMLElement = menuRef.current;
+
+      for (let i = 0; i < 6; i++) {
+        if (ancestor.parentElement) {
+          ancestor = ancestor.parentElement;
+        }
+      }
+
+      const ancestorRect = ancestor.getBoundingClientRect();
+      const xPixelsClose = 150;
+      if (menuRect.bottom >= ancestorRect.bottom - xPixelsClose) {
+        setMenuDirection("upwards");
+      } else {
+        setMenuDirection("downwards");
+      }
+    }
     setIsMenuOpen((prev) => !prev);
   };
 
@@ -56,7 +75,11 @@ export default function DownloadMenuButton({ data, id }: Props) {
         )}
       </button>
       {isMenuOpen && (
-        <div className="absolute z-15 left-0 top-0 right-0 bottom-0 flex justify-end">
+        <div
+          className={`absolute z-15 left-0 top-0 right-0 bottom-0 flex justify-end ${
+            menuDirection === "upwards" ? "items-end" : ""
+          }`}
+        >
           <div className="h-min relative">
             <div className="relative z-10 flex flex-col gap-3 px-5 pt-2 pb-3">
               <div className="flex flex-col gap-2">
