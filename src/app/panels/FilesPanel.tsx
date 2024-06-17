@@ -97,7 +97,10 @@ export default function FilesPanel({ files }: Props) {
 
   return (
     <div className="p-6 min-w-0 min-h-0 flex flex-col">
-      <span className="font-slab text-56px text-left">Files</span>
+      <div className="flex justify-between items-center">
+        <span className="font-slab text-56px text-left">Files</span>
+        <div className="flex items-center"></div>
+      </div>
       <FilesTable
         sortedFiles={sortedFiles}
         requestSort={requestSort}

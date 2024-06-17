@@ -176,7 +176,7 @@ export default function FilesTable({
       <table className="min-w-full table-fixed">
         <thead>
           <tr>
-            <th></th>
+            <th className="sticky top-0 bg-bgPrimary z-30"></th>
             <TableHeader
               columnKey="name"
               label="Name"
@@ -204,6 +204,7 @@ export default function FilesTable({
               requestSort={requestSort}
               sortConfig={sortConfig}
             />
+            <th className="sticky top-0 bg-bgPrimary z-30"></th>
           </tr>
         </thead>
         <tbody>

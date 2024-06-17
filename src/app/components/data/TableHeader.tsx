@@ -21,7 +21,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   return (
     <th
       style={{ width: `${width}px`, maxWidth: `${width}px` }}
-      className="overflow-hidden"
+      className="overflow-hidden sticky top-0 z-30 bg-bgPrimary"
     >
       <Clickable
         onClick={() => requestSort(columnKey)}
