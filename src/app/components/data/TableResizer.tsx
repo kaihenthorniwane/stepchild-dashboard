@@ -32,7 +32,7 @@ const TableResizer = forwardRef<HTMLDivElement, ResizerProps>(
       <div
         style={style}
         ref={ref}
-        className="absolute top-0 z-10 h-8 w-0 select-none "
+        className="absolute top-0 z-40 h-8 w-0 select-none "
       >
         <div
           onMouseDown={handleMouseDown}
