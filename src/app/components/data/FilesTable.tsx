@@ -58,7 +58,7 @@ export default function FilesTable({
   const handleResize = useCallback(
     (key: "name", delta: number) => {
       setTableLayout((prevLayout) => {
-        const tableWidth = tableRef.current ? tableRef.current.offsetWidth : 0;
+        const tableWidth = tableRef.current ? tableRef.current.clientWidth : 0;
         const newWidths = {
           ...prevLayout.columnWidths,
           [key]: Math.max(prevLayout.columnWidths[key] + delta, 50),
@@ -83,8 +83,7 @@ export default function FilesTable({
   useEffect(() => {
     const updatetableLayout = () => {
       if (tableRef.current) {
-        const tableRect = tableRef.current.getBoundingClientRect();
-        const tableWidth = tableRect.width;
+        const tableWidth = tableRef.current ? tableRef.current.clientWidth : 0;
 
         setTableLayout((prevLayout) => {
           const prevWidths = prevLayout.columnWidths;
@@ -160,7 +159,7 @@ export default function FilesTable({
   return (
     <div
       ref={tableRef}
-      className="relative overflow-y-auto overflow-x-hidden flex-grow min-h-0"
+      className="relative overflow-y-auto overflow-x-hidden flex-grow min-h-0 scale-100"
     >
       {tableLayout.breakpoint === "default" && (
         <TableResizer
@@ -204,7 +203,7 @@ export default function FilesTable({
               requestSort={requestSort}
               sortConfig={sortConfig}
             />
-            <th className="sticky top-0 bg-bgPrimary z-30"></th>
+            <th className="sticky top-0 bg-bgPrimary z-30 w-0 max-w-0 min-w-0"></th>
           </tr>
         </thead>
         <tbody>
