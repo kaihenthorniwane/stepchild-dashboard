@@ -36,7 +36,7 @@ export default function FilesPanelHeader({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [sortedFiles, selectedRowIds, handleControlAllClick]);
+  }, [sortedFiles, selectedRowIds]);
 
   const showActionButtons = selectedRowIds.length > 0;
   const areAllSelected = selectedRowIds.length === sortedFiles.length;
