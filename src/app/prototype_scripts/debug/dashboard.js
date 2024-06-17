@@ -71,8 +71,9 @@ class StepchildSerialPort{
                 let fileSize = filesizeBuffer[0]<<24 | filesizeBuffer[1]<<16 | filesizeBuffer[2]<<8 | filesizeBuffer[3];
                 let data = this.port.readBytes(fileSize);
                 let stepchildFile = {
-                    filename: filename,
-                    size: fileSize,
+                    path: "/SAVES/"+filename,
+                    name: filename,
+                    fileSize: fileSize,
                     data: data
                 };
                 console.log(stepchildFile);
