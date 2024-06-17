@@ -15,22 +15,21 @@ class StepchildSerialInterface{
             baudRate: 9600,
             bufferSize:255
         };
-    }
 
-    static cmd =  {
-        DUMP_FILESYSTEM         : 0,
-        DUMP_SETTINGS           : 1,
-        ENTER_BOOTSEL           : 2,
-        ENABLE_SCREENCAPTURE    : 3,
-        DISABLE_SCREENCAPTURE   : 4,
-        DOWNLOAD_FILE           : 5,
-        SEND_NEXT_FILE_PLEASE   : 6,
-        SEND_FIRMWARE_VERSION   : 7,
-        RESET_SYSTEM            : 8,
-        EXIT_INTERFACE          : 9,
-        START_INTERFACE         :10,
-        SEND_FILE_COUNT         :11
-    };
+        //Commands
+        this.DUMP_FILESYSTEM         = 0;
+        this.DUMP_SETTINGS           = 1;
+        this.ENTER_BOOTSEL           = 2;
+        this.ENABLE_SCREENCAPTURE    = 3;
+        this.DISABLE_SCREENCAPTURE   = 4;
+        this.DOWNLOAD_FILE           = 5;
+        this.SEND_NEXT_FILE_PLEASE   = 6;
+        this.SEND_FIRMWARE_VERSION   = 7;
+        this.RESET_SYSTEM            = 8;
+        this.EXIT_INTERFACE          = 9;
+        this.START_INTERFACE         = 10;
+        this.SEND_FILE_COUNT         = 11;
+    }
 
     logPortInfo(){
         if(this.port.opened()){
@@ -45,12 +44,10 @@ class StepchildSerialInterface{
             console.log("-- no ports connected --");
         }
     }
-    connect(){
-        if(!this.port.opened()){
-            this.port.open(this.options.baudRate);
-            this.connected = true;
-            this.logPortInfo();
-        }
+    async connect(){
+        await this.port.open(this.options.baudRate);
+        this.connected = true;
+        this.logPortInfo();
     }
     disconnect(){
         if(this.port.opened()){
@@ -74,14 +71,15 @@ class StepchildSerialInterface{
         });
     }
     async downloadFilesystem(){
-        this.sendCommand(this.cmd.SEND_FILE_COUNT);
+        const files = [];
+        this.sendCommand(this.SEND_FILE_COUNT);
         let numberOfFiles = await this.getFileCount();
         console.log("Grabbing "+numberOfFiles+" files from Stepchild...");
-        this.sendCommand(this.cmd.DUMP_FILESYSTEM);
+        this.sendCommand(this.DUMP_FILESYSTEM);
         for(let i = 0; i<numberOfFiles; i++){
-            await this.downloadFile();
+            files.push(await this.downloadFile());
         }
-
+        return files;
     }
     downloadFile(){
         return new Promise((resolve,reject) => {
