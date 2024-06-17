@@ -6,6 +6,7 @@ import StepchildSerialInterface from "./interface.js"
 export const sketch = (p) => {
   p.setup = () => {
     const serialPort = new StepchildSerialInterface();
+    p.noCanvas();
   };
 
   //draw is empty!
