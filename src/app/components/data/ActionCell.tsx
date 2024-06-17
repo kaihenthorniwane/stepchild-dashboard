@@ -16,7 +16,7 @@ export default function ActionCell({ data, shown, id }: Props) {
     >
       {shown && (
         <div className="flex absolute min-w-max top-0 right-2 bottom-0 gap-2 items-center justify-end z-20">
-          <DownloadMenuButton data={data} id={id} />
+          <DownloadMenuButton data={data} mode={"single download"} />
           <PixelButton mode="fill">Preview</PixelButton>
           <DitherGroup />
         </div>

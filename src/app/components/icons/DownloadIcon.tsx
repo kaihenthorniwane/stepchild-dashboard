@@ -1,10 +1,12 @@
-export default function DownloadIcon() {
+export default function DownloadIcon({ className }: { className?: string }) {
   return (
     <svg
       width="23"
       height="21"
       viewBox="0 0 23 21"
-      className="overflow-visible fill-current bg-bgPrimary"
+      className={`overflow-visible fill-current ${
+        className ? className : "bg-bgPrimary"
+      }`}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

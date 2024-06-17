@@ -4,12 +4,20 @@ import DownloadIcon from "../icons/DownloadIcon";
 import BackOfButtonFillLarge from "../button/backs/BackOfButtonFillLarge";
 import BackOfButtonOutlineLarge from "../button/backs/BackOfButtonOutlineLarge";
 
-type Props = {
+type SingleDownloadProps = {
+  mode: "single download";
   data: ArrayBuffer;
-  id: number;
 };
 
-export default function DownloadMenuButton({ data, id }: Props) {
+type MultipleDownloadProps = {
+  mode: "multiple download";
+  data: ArrayBuffer[];
+};
+
+export default function DownloadMenuButton({
+  mode,
+  data,
+}: SingleDownloadProps | MultipleDownloadProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuDirection, setMenuDirection] = useState("downwards");
   const menuRef = useRef<HTMLDivElement>(null);
@@ -27,7 +35,10 @@ export default function DownloadMenuButton({ data, id }: Props) {
 
       const ancestorRect = ancestor.getBoundingClientRect();
       const xPixelsClose = 150;
-      if (menuRect.bottom >= ancestorRect.bottom - xPixelsClose) {
+      if (
+        menuRect.bottom >= ancestorRect.bottom - xPixelsClose &&
+        mode === "single download"
+      ) {
         setMenuDirection("upwards");
       } else {
         setMenuDirection("downwards");
@@ -60,17 +71,30 @@ export default function DownloadMenuButton({ data, id }: Props) {
         <div
           className={`
           ${isMenuOpen ? "z-[0]" : "z-[5]"}
-            flex items-center relative
+            flex gap-2 items-center relative
             group-active/button:translate-y-0.5
             px-5 py-0.5 font-condensed text-32px
-            text-textPrimary group-hover/button:text-textSecondary`}
+            ${
+              mode === "multiple download"
+                ? "text-bgPrimary"
+                : "text-textPrimary group-hover/button:text-textSecondary"
+            }`}
         >
-          <span>Download</span>
+          {mode === "multiple download" ? (
+            <>
+              <DownloadIcon className="bg-transparent" />
+              <span className="w-max">Download Selected</span>
+            </>
+          ) : (
+            <span>Download</span>
+          )}
         </div>
         {!isMenuOpen && (
           <>
-            <BackOfButtonOutlineLarge />
-            <BackOfButtonFillLarge mode={"outline"} />
+            {mode === "single download" && <BackOfButtonOutlineLarge />}
+            <BackOfButtonFillLarge
+              mode={mode === "multiple download" ? "fill" : "outline"}
+            />
           </>
         )}
       </button>
@@ -85,7 +109,11 @@ export default function DownloadMenuButton({ data, id }: Props) {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <DownloadIcon />
-                  <span className="w-max">Download as</span>
+                  <span className="w-max">
+                    {mode === "multiple download"
+                      ? "Download selected as"
+                      : "Download as"}
+                  </span>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <PixelButton mode="fill" size="small">
@@ -102,7 +130,7 @@ export default function DownloadMenuButton({ data, id }: Props) {
             </div>
 
             <BackOfButtonOutlineLarge />
-            <BackOfButtonFillLarge mode={"outline"} />
+            <BackOfButtonFillLarge mode="outline" />
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { StepchildFile } from "../context/FilesContext";
 import FilesTable from "../components/data/FilesTable";
+import FilesPanelHeader from "../components/data/FilesPanelHeader";
 
 type Props = {
   files: StepchildFile[];
@@ -72,35 +73,13 @@ export default function FilesPanel({ files }: Props) {
     });
   };
 
-  const handleControlAllClick = () => {
-    if (selectedRowIds.length === sortedFiles.length) {
-      setSelectedRowIds([]);
-    } else {
-      setSelectedRowIds(sortedFiles.map((file) => file.id));
-    }
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "a" && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        handleControlAllClick();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [sortedFiles, selectedRowIds]);
-
   return (
     <div className="p-6 min-w-0 min-h-0 flex flex-col">
-      <div className="flex justify-between items-center">
-        <span className="font-slab text-56px text-left">Files</span>
-        <div className="flex items-center"></div>
-      </div>
+      <FilesPanelHeader
+        selectedRowIds={selectedRowIds}
+        sortedFiles={sortedFiles}
+        setSelectedRowIds={setSelectedRowIds}
+      />
       <FilesTable
         sortedFiles={sortedFiles}
         requestSort={requestSort}
