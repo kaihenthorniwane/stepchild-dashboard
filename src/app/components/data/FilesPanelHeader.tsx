@@ -2,6 +2,7 @@ import { StepchildFile } from "@/app/context/FilesContext";
 import { useEffect } from "react";
 import DownloadMenuButton from "./DownloadMenuButton";
 import PixelButton from "../button/PixelButton";
+import SelectAllIcon from "../icons/SelectAllIcon";
 
 type Props = {
   sortedFiles: StepchildFile[];
@@ -46,7 +47,8 @@ export default function FilesPanelHeader({
       <span className="font-slab text-56px text-left">Files</span>
       <div className="flex flex-col items-end sm:flex-row sm:items-center gap-2">
         <PixelButton onClick={handleControlAllClick} mode="outline">
-          {areAllSelected ? "Deselect All" : "Select All"}
+          <SelectAllIcon selected={areAllSelected} />
+          <span>{areAllSelected ? "Deselect All" : "Select All"}</span>
         </PixelButton>
         {showActionButtons && (
           <DownloadMenuButton

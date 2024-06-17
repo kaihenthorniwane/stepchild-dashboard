@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { FilesProvider } from "./context/FilesContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { FilesPanelSettingsProvider } from "./context/FilesPanelSettingsContext";
 
 const condensedFont = localFont({
   src: "../../public/fonts/Not Jam UI Condensed 16.ttf",
@@ -41,7 +42,9 @@ export default function RootLayout({
         className={`text-textPrimary bg-bgPrimary text-32px font-condensed ${condensedFont.variable} ${slabFont.variable} ${pixelFont.variable} ${regularFont.variable}`}
       >
         <ThemeProvider>
-          <FilesProvider>{children}</FilesProvider>
+          <FilesProvider>
+            <FilesPanelSettingsProvider>{children}</FilesPanelSettingsProvider>
+          </FilesProvider>
         </ThemeProvider>
       </body>
     </html>

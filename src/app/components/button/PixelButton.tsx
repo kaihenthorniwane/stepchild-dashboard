@@ -33,7 +33,7 @@ export default function PixelButton({
             : "text-bgPrimary "
         }`}
       >
-        <div className="flex gap-2 justify-center items-center relative z-[3]">
+        <div className="flex gap-3 justify-center items-center relative z-[3]">
           {children}
         </div>
         {mode === "outline" && size === "large" && <BackOfButtonOutlineLarge />}
