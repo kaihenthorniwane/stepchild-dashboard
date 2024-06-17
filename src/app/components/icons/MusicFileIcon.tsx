@@ -5,6 +5,7 @@ export default function MusicFileIcon({ selected }: { selected?: boolean }) {
       height="48"
       viewBox="0 0 48 48"
       fill="none"
+      className={`${selected ? "animate-up-down-2px" : ""}`}
       xmlns="http://www.w3.org/2000/svg"
     >
       <g className={selected ? "fill-current" : "fill-textTertiary"}>

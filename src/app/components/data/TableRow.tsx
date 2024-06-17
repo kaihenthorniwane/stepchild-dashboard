@@ -38,6 +38,16 @@ export default function TableRow({
     }
   };
 
+  const className = isSelected
+    ? "animate-up-down-2px truncate p-2"
+    : "truncate p-2";
+  const getDelays = (index: number): React.CSSProperties => {
+    return {
+      animationDelay: `${index * -150}ms`,
+      animationFillMode: "both",
+    };
+  };
+
   return (
     <tr
       key={file.id}
@@ -54,13 +64,27 @@ export default function TableRow({
         <MusicFileIcon selected={isSelected} />
       </TableCell>
 
-      <TableCell width={tableLayout.columnWidths.name}>{file.name}</TableCell>
+      <TableCell
+        width={tableLayout.columnWidths.name}
+        className={className}
+        style={getDelays(1)}
+      >
+        {file.name}
+      </TableCell>
       {tableLayout.breakpoint === "default" && (
-        <TableCell width={tableLayout.columnWidths.fileName}>
+        <TableCell
+          width={tableLayout.columnWidths.fileName}
+          className={className}
+          style={getDelays(2)}
+        >
           {formatPath(file.path)}
         </TableCell>
       )}
-      <TableCell width={tableLayout.columnWidths.fileSize}>
+      <TableCell
+        width={tableLayout.columnWidths.fileSize}
+        className={className}
+        style={getDelays(3)}
+      >
         {`${file.fileSize} bytes`}
       </TableCell>
       <ActionCell shown={isHovered} data={file.data} id={file.id} />
