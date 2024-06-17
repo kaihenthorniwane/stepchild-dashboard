@@ -11,8 +11,6 @@ import p5 from 'p5';
 'use strict';
 
 (function() {
-
-
   // Can be called with ArrayBuffers or views on them
   function memcpy(dst, dstOffset, src, srcOffset, len) {
     if (!(dst instanceof ArrayBuffer)) {
@@ -261,11 +259,15 @@ import p5 from 'p5';
      * - open('Arduino', 57600);
      * - open(usedSerialPorts()[0], 57600);
      */
-    open() {
-      (async () => {
-        await this.selectPort(...arguments);            // sets options and port
-        await this.start();                             // opens the port and starts the read-loop
-      })();
+    // async open() {
+    //   (async () => {
+    //     await this.selectPort(...arguments);            // sets options and port
+    //     await this.start();                             // opens the port and starts the read-loop
+    //   })();
+    // }
+    async open() {
+      await this.selectPort(...arguments);            // sets options and port
+      await this.start();                             // opens the port and starts the read-loop
     }
 
     /**

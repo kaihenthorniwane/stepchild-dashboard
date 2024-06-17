@@ -3,6 +3,7 @@ import { useFiles } from "./context/FilesContext";
 import dynamic from "next/dynamic";
 import FilesPanel from "./panels/FilesPanel";
 import EmptyStatePanel from "./panels/EmptyStatePanel";
+// import P5Component from "../stepchild_interface/StepchildSerialInterface/p5Component.js";
 
 export default function Home() {
   const { state } = useFiles();
