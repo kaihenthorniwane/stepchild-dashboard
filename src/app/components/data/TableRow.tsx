@@ -14,12 +14,14 @@ type TableRowProps = {
   tableLayout: TableLayout;
   isSelected: boolean;
   toggleSelected: (id: number) => void;
+  toggleShiftSelected: (id: number) => void;
 };
 
 export default function TableRow({
   file,
   isSelected,
   toggleSelected,
+  toggleShiftSelected,
   tableLayout,
 }: TableRowProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -38,6 +40,14 @@ export default function TableRow({
     }
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (e.shiftKey) {
+      toggleShiftSelected(file.id);
+    } else {
+      toggleSelected(file.id);
+    }
+  };
+
   const className = isSelected
     ? "animate-up-down-2px truncate p-2"
     : "truncate p-2";
@@ -52,11 +62,11 @@ export default function TableRow({
     <tr
       key={file.id}
       tabIndex={0}
-      className={`border-textTertiary  text-textPrimary bg-bgPrimary border-b-2 relative ${
+      className={`border-textTertiary text-textPrimary bg-bgPrimary border-b-2 relative select-none ${
         isSelected ? "invert-colors" : ""
       }`}
       onKeyDown={handleKeyDown}
-      onClick={() => toggleSelected(file.id)}
+      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

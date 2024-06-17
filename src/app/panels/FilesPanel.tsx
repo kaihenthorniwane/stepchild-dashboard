@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { StepchildFile } from "../context/FilesContext";
 import FilesTable from "../components/data/FilesTable";
 
@@ -57,6 +57,44 @@ export default function FilesPanel({ files }: Props) {
     });
   };
 
+  const handleShiftRowClick = (id: number) => {
+    setSelectedRowIds((prev) => {
+      const lastSelected = prev[prev.length - 1];
+      const lastSelectedIndex = sortedFiles.findIndex(
+        (file) => file.id === lastSelected
+      );
+      const clickedIndex = sortedFiles.findIndex((file) => file.id === id);
+      const newSelection = sortedFiles.slice(
+        Math.min(lastSelectedIndex, clickedIndex),
+        Math.max(lastSelectedIndex, clickedIndex) + 1
+      );
+      return newSelection.map((file) => file.id);
+    });
+  };
+
+  const handleControlAllClick = () => {
+    if (selectedRowIds.length === sortedFiles.length) {
+      setSelectedRowIds([]);
+    } else {
+      setSelectedRowIds(sortedFiles.map((file) => file.id));
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "a" && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        handleControlAllClick();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [sortedFiles, selectedRowIds]);
+
   return (
     <div className="p-6 min-w-0 min-h-0 flex flex-col">
       <span className="font-slab text-56px text-left">Files</span>
@@ -66,6 +104,7 @@ export default function FilesPanel({ files }: Props) {
         sortConfig={sortConfig}
         selectedRowIds={selectedRowIds}
         handleRowClick={handleRowClick}
+        handleShiftRowClick={handleShiftRowClick}
       />
     </div>
   );

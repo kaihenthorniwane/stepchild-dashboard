@@ -11,6 +11,7 @@ type Props = {
   sortConfig: SortConfig | null;
   selectedRowIds: number[];
   handleRowClick: (id: number) => void;
+  handleShiftRowClick: (id: number) => void;
 };
 
 export type TableLayout = {
@@ -34,6 +35,7 @@ export default function FilesTable({
   sortConfig,
   selectedRowIds,
   handleRowClick,
+  handleShiftRowClick,
 }: Props) {
   const [tableLayout, setTableLayout] = useState<TableLayout>({
     breakpoint: "default",
@@ -212,6 +214,7 @@ export default function FilesTable({
               key={file.id}
               isSelected={selectedRowIds.some((a) => a === file.id)}
               toggleSelected={handleRowClick}
+              toggleShiftSelected={handleShiftRowClick}
             />
           ))}
         </tbody>
