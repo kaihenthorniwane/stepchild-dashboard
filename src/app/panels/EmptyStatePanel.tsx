@@ -2,6 +2,7 @@ import { loadTestData } from "@/stepchild_interface/test_data_functions";
 import PixelButton from "../components/button/PixelButton";
 import { useFiles } from "../context/FilesContext";
 import { loadDataFromStepChild } from "@/stepchild_interface/data_functions";
+import dynamic from "next/dynamic";
 
 export default function EmptyStatePanel() {
   const { dispatch } = useFiles();
@@ -15,11 +16,18 @@ export default function EmptyStatePanel() {
     dispatch({ type: "SET_FILES", payload: files });
   };
 
+  const DynamicPixelButton = dynamic(
+    () => import("../components/button/PixelButton"),
+    {
+      ssr: false,
+    }
+  );
+
   return (
     <div className="flex flex-col gap-2">
-      <PixelButton onClick={fetchActualData} mode="fill">
+      <DynamicPixelButton onClick={fetchActualData} mode="fill">
         Load Actual Data
-      </PixelButton>
+      </DynamicPixelButton>
       <PixelButton onClick={fetchTestData} mode="outline">
         Load Test Data
       </PixelButton>

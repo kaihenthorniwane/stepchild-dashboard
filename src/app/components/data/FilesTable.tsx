@@ -81,9 +81,11 @@ export default function FilesTable({
   );
 
   useEffect(() => {
+    const tableRefStored = tableRef.current;
+
     const updatetableLayout = () => {
-      if (tableRef.current) {
-        const tableWidth = tableRef.current ? tableRef.current.clientWidth : 0;
+      if (tableRefStored) {
+        const tableWidth = tableRefStored ? tableRefStored.clientWidth : 0;
 
         setTableLayout((prevLayout) => {
           const prevWidths = prevLayout.columnWidths;
@@ -145,13 +147,13 @@ export default function FilesTable({
       updatetableLayout();
     });
 
-    if (tableRef.current) {
-      resizeObserver.observe(tableRef.current);
+    if (tableRefStored) {
+      resizeObserver.observe(tableRefStored);
     }
 
     return () => {
-      if (tableRef.current) {
-        resizeObserver.unobserve(tableRef.current);
+      if (tableRefStored) {
+        resizeObserver.unobserve(tableRefStored);
       }
     };
   }, []);
