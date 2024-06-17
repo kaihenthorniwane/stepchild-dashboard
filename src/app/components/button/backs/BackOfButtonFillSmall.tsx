@@ -6,11 +6,11 @@ export default function BackOfButtonFillSmall({ mode }: Props) {
   return (
     <div
       className={`grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
-    w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[-2]
+    w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[0]
     rounded-full
     ${
       mode === "fill"
-        ? "text-textPrimary group-hover/button:text-textSecondary bg-textPrimary group-hover/button:bg-textSecondary"
+        ? "text-textPrimary group-hover/button:text-textSecondary "
         : "text-bgPrimary "
     }`}
     >
@@ -59,7 +59,7 @@ const Middle = () => (
     preserveAspectRatio="none"
     viewBox="0 0 114 14"
     fill="currentColor"
-    className="w-full h-full"
+    className="w-full h-full scale-[1.05]"
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="114" height="14" />

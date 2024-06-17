@@ -17,6 +17,7 @@ function isStepchildFileKey(key: string): key is keyof StepchildFile {
 
 export default function FilesPanel({ files }: Props) {
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [selectedRowIds, setSelectedRowIds] = useState<number[]>([]);
 
   const sortedFiles = useMemo(() => {
     let sortableFiles = [...files];
@@ -47,13 +48,24 @@ export default function FilesPanel({ files }: Props) {
     setSortConfig({ key, direction });
   };
 
+  const handleRowClick = (id: number) => {
+    setSelectedRowIds((prev) => {
+      if (prev.some((a) => a === id)) {
+        return prev.filter((a) => a !== id);
+      }
+      return [...prev, id];
+    });
+  };
+
   return (
-    <div className="p-6 min-w-0 min-h-0">
+    <div className="p-6 min-w-0 min-h-0 flex flex-col">
       <span className="font-slab text-56px text-left">Files</span>
       <FilesTable
         sortedFiles={sortedFiles}
         requestSort={requestSort}
         sortConfig={sortConfig}
+        selectedRowIds={selectedRowIds}
+        handleRowClick={handleRowClick}
       />
     </div>
   );

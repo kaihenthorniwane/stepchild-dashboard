@@ -20,8 +20,8 @@ export default function PixelButton({
     <button onClick={onClick} className="group/button h-min">
       <div
         className={`
-        flex items-center relative
         group-active/button:translate-y-0.5
+        relative
         ${
           size === "small"
             ? "px-4 py-0.5 pt-1.5 font-pixel text-15px"
@@ -33,7 +33,9 @@ export default function PixelButton({
             : "text-bgPrimary "
         }`}
       >
-        {children}
+        <div className="flex justify-center items-center relative z-[3]">
+          {children}
+        </div>
         {mode === "outline" && size === "large" && <BackOfButtonOutlineLarge />}
         {size === "large" && <BackOfButtonFillLarge mode={mode} />}
         {mode === "outline" && size === "small" && <BackOfButtonOutlineSmall />}

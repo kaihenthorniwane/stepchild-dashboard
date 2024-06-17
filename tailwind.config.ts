@@ -39,9 +39,16 @@ const config: Config = {
           "99.9%": { transform: "translateX(2px)" },
           "100%": { transform: "translateX(0)" },
         },
+        "up-down-2px": {
+          "0%": { transform: "translateY(-2px)" },
+          "50%": { transform: "translateY(-2px)" },
+          "50.1%": { transform: "translateY(0px)" },
+          "100%": { transform: "translateXY(0px)" },
+        },
       },
       animation: {
-        "slide-in-right": "slide-in-right 0.4s  forwards",
+        "slide-in-right": "slide-in-right 1s forwards",
+        "up-down-2px": "up-down-2px 1s infinite",
       },
     },
   },

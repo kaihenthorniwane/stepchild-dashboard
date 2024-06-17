@@ -2,19 +2,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StepchildFile } from "@/app/context/FilesContext";
 import { SortConfig } from "@/app/panels/FilesPanel";
 import TableHeader from "./TableHeader";
-import TableCell from "./TableCell";
 import TableResizer from "./TableResizer";
-import MusicFileIcon from "../icons/MusicFileIcon";
-import DitherGroup from "./DitherGroup";
-import PixelButton from "../button/PixelButton";
+import TableRow from "./TableRow";
 
 type Props = {
   sortedFiles: StepchildFile[];
   requestSort: (key: string) => void;
   sortConfig: SortConfig | null;
+  selectedRowIds: number[];
+  handleRowClick: (id: number) => void;
 };
 
-type TableLayout = {
+export type TableLayout = {
   breakpoint: "default" | "minimal";
   columnWidths: {
     icon: number;
@@ -29,14 +28,12 @@ type TableLayout = {
   };
 };
 
-function formatPath(path: string): string {
-  return path.split("/")[path.split("/").length - 1];
-}
-
 export default function FilesTable({
   sortedFiles,
   requestSort,
   sortConfig,
+  selectedRowIds,
+  handleRowClick,
 }: Props) {
   const [tableLayout, setTableLayout] = useState<TableLayout>({
     breakpoint: "default",
@@ -159,7 +156,10 @@ export default function FilesTable({
   }, []);
 
   return (
-    <div ref={tableRef} className="relative overflow-y-auto overflow-x-hidden">
+    <div
+      ref={tableRef}
+      className="relative overflow-y-auto overflow-x-hidden flex-grow min-h-0"
+    >
       {tableLayout.breakpoint === "default" && (
         <TableResizer
           ref={nameResizeRef}
@@ -206,33 +206,13 @@ export default function FilesTable({
         </thead>
         <tbody>
           {sortedFiles.map((file) => (
-            <tr
+            <TableRow
+              file={file}
+              tableLayout={tableLayout}
               key={file.id}
-              className="border-textTertiary border-b-2 relative group "
-            >
-              <TableCell width={tableLayout.columnWidths.icon} className="p-3">
-                <MusicFileIcon />
-              </TableCell>
-
-              <TableCell width={tableLayout.columnWidths.name}>
-                {file.name}
-              </TableCell>
-              {tableLayout.breakpoint === "default" && (
-                <TableCell width={tableLayout.columnWidths.fileName}>
-                  {formatPath(file.path)}
-                </TableCell>
-              )}
-              <TableCell width={tableLayout.columnWidths.fileSize}>
-                {`${file.fileSize} bytes`}
-              </TableCell>
-              <td className="group relative min-w-0 max-w-0 w-0 top-auto bottom-auto">
-                <div className="hidden group-hover:flex absolute min-w-max top-0 right-0 bottom-0 gap-2 items-center justify-end z-20">
-                  <PixelButton mode="outline">Download</PixelButton>
-                  <PixelButton mode="fill">Preview</PixelButton>
-                  <DitherGroup />
-                </div>
-              </td>
-            </tr>
+              isSelected={selectedRowIds.some((a) => a === file.id)}
+              toggleSelected={handleRowClick}
+            />
           ))}
         </tbody>
       </table>

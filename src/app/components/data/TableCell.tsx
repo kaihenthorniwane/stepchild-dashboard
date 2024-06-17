@@ -13,7 +13,7 @@ const TableCell = ({ width, children, className }: TableCellProps) => {
         width: `${width}px`,
         maxWidth: `${width}px`,
       }}
-      className={className || "p-2 truncate"}
+      className={className || "p-2 truncate "}
     >
       {children}
     </td>
