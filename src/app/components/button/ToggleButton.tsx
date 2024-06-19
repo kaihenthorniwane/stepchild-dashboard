@@ -12,9 +12,10 @@ type ToggleOption = {
 
 type Props = {
   toggleOptions: ToggleOption[];
+  id: string;
 };
 
-export default function ToggleButton({ toggleOptions }: Props) {
+export default function ToggleButton({ toggleOptions, id }: Props) {
   return (
     <div className="flex justify-stretch relative p-1">
       {toggleOptions.map((option, index) => (
@@ -37,7 +38,7 @@ export default function ToggleButton({ toggleOptions }: Props) {
               className="absolute left-0 top-0 right-0 bottom-0"
               layout="position"
               transition={{ duration: 0.2, ease: "circOut" }}
-              layoutId="toggle-bg"
+              layoutId={`toggle-bg-${id}`}
             >
               <BackOfButtonFillSmall mode={"fill"} />
             </motion.div>

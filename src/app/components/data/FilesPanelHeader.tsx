@@ -6,6 +6,7 @@ import DropdownButton from "../button/DropdownButton";
 import DownloadIcon from "../icons/DownloadIcon";
 import { useFilesPanelSettings } from "@/app/context/FilesPanelSettingsContext";
 import ToggleButton from "../button/ToggleButton";
+import UndoIcon from "../icons/UndoIcon";
 
 type Props = {
   sortedFiles: StepchildFile[];
@@ -18,7 +19,7 @@ export default function FilesPanelHeader({
   selectedRowIds,
   setSelectedRowIds,
 }: Props) {
-  const { state, dispatch } = useFilesPanelSettings();
+  const { state, dispatch, areSettingsDefault } = useFilesPanelSettings();
 
   const handleControlAllClick = useCallback(() => {
     if (selectedRowIds.length === sortedFiles.length) {
@@ -71,6 +72,23 @@ export default function FilesPanelHeader({
     },
   ];
 
+  const displayModeToggleOptions = [
+    {
+      text: "Rows",
+      isSelected: state.displayMode === "rows",
+      handleClick: () => {
+        dispatch({ type: "SET_DISPLAY_MODE", payload: "rows" });
+      },
+    },
+    {
+      text: "Grid",
+      isSelected: state.displayMode === "grid",
+      handleClick: () => {
+        dispatch({ type: "SET_DISPLAY_MODE", payload: "grid" });
+      },
+    },
+  ];
+
   return (
     <div className="flex justify-between items-center">
       <span className="font-slab text-56px text-left">Files</span>
@@ -115,7 +133,25 @@ export default function FilesPanelHeader({
         <DropdownButton text={"Settings"} direction={"downwards"}>
           <div className="leading-none flex flex-col gap-3">
             <span className="w-max">Default file download type</span>
-            <ToggleButton toggleOptions={fileFormatToggleOptions} />
+            <ToggleButton
+              toggleOptions={fileFormatToggleOptions}
+              id="fileFormat"
+            />
+            <span className="w-max">Display Mode</span>
+            <ToggleButton
+              toggleOptions={displayModeToggleOptions}
+              id="displayMode"
+            />
+            {!areSettingsDefault && (
+              <PixelButton
+                onClick={() => dispatch({ type: "RESET_TO_DEFAULTS" })}
+                mode="fill"
+                size="large"
+                IconComponent={<UndoIcon />}
+              >
+                Reset to Defaults
+              </PixelButton>
+            )}
           </div>
         </DropdownButton>
       </div>

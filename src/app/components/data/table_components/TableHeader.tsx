@@ -1,6 +1,6 @@
 import React from "react";
-import Clickable from "../button/Clickable";
-import SmallDropdownIcon from "../icons/SmallDropdownIcon";
+import Clickable from "../../button/Clickable";
+import SmallDropdownIcon from "../../icons/SmallDropdownIcon";
 import { SortConfig } from "@/app/panels/FilesPanel";
 
 type TableHeaderProps = {

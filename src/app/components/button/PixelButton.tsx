@@ -19,7 +19,7 @@ export default function PixelButton({
   onClick = () => {},
 }: ButtonProps) {
   return (
-    <button onClick={onClick} className="group/button h-min">
+    <button onClick={onClick} className="group/button h-min leading-normal">
       <div
         className={`
         group-active/button:translate-y-0.5

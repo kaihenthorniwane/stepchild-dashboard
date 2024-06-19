@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, use } from "react";
-import PixelButton from "../button/PixelButton";
+import PixelButton from "../../button/PixelButton";
 import DitherGroup from "./DitherGroup";
-import DownloadIcon from "../icons/DownloadIcon";
-import DropdownButton from "../button/DropdownButton";
+import DownloadIcon from "../../icons/DownloadIcon";
+import DropdownButton from "../../button/DropdownButton";
 import { useFilesPanelSettings } from "@/app/context/FilesPanelSettingsContext";
 
 type Props = {

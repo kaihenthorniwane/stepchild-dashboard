@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StepchildFile } from "@/app/context/FilesContext";
 import { SortConfig } from "@/app/panels/FilesPanel";
-import TableHeader from "./TableHeader";
-import TableResizer from "./TableResizer";
-import TableRow from "./TableRow";
+import TableHeader from "./table_components/TableHeader";
+import TableResizer from "./table_components/TableResizer";
+import TableRow from "./table_components/TableRow";
 
 type Props = {
   sortedFiles: StepchildFile[];

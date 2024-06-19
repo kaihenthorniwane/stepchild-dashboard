@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { StepchildFile } from "@/app/context/FilesContext";
 import TableCell from "./TableCell";
-import MusicFileIcon from "../icons/MusicFileIcon";
+import MusicFileIcon from "../../icons/MusicFileIcon";
 import ActionCell from "./ActionCell";
-import { TableLayout } from "./FilesTable";
+import { TableLayout } from "../FilesTable";
 
 function formatPath(path: string): string {
   return path.split("/")[path.split("/").length - 1];
