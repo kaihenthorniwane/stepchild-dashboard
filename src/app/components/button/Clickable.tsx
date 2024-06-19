@@ -15,7 +15,9 @@ export default function Clickable({
 }: Props) {
   return (
     <button
-      className={`${additionalClasses ? additionalClasses : "flex"} ${
+      className={`${
+        additionalClasses ? additionalClasses : "flex gap-2 items-center"
+      } ${
         mode === "primary"
           ? "text-textPrimary hover:text-textSecondary active:text-textTertiary active:translate-y-0.5"
           : "text-textSecondary hover:text-textPrimary active:text-textTertiary active:translate-y-0.5"

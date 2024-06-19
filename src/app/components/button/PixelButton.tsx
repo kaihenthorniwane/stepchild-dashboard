@@ -6,6 +6,7 @@ import BackOfButtonOutlineSmall from "./backs/BackOfButtonOutlineSmall";
 type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
+  IconComponent?: React.ReactNode;
   mode?: "fill" | "outline";
   size?: "small" | "large";
 };
@@ -13,6 +14,7 @@ type ButtonProps = {
 export default function PixelButton({
   children,
   mode = "fill",
+  IconComponent,
   size = "large",
   onClick = () => {},
 }: ButtonProps) {
@@ -34,6 +36,7 @@ export default function PixelButton({
         }`}
       >
         <div className="flex gap-3 justify-center items-center relative z-[3]">
+          {IconComponent && IconComponent}
           {children}
         </div>
         {mode === "outline" && size === "large" && <BackOfButtonOutlineLarge />}

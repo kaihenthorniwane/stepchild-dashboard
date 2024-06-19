@@ -59,7 +59,7 @@ const Middle = () => (
     preserveAspectRatio="none"
     viewBox="0 0 114 14"
     fill="currentColor"
-    className="w-full h-full scale-[1.05]"
+    className="w-full h-full scale-105"
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="114" height="14" />

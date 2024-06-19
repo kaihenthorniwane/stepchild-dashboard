@@ -1,8 +1,11 @@
 import { StepchildFile } from "@/app/context/FilesContext";
 import { useEffect } from "react";
-import DownloadMenuButton from "./DownloadMenuButton";
 import PixelButton from "../button/PixelButton";
 import SelectAllIcon from "../icons/SelectAllIcon";
+import DropdownButton from "../button/DropdownButton";
+import DownloadIcon from "../icons/DownloadIcon";
+import { useFilesPanelSettings } from "@/app/context/FilesPanelSettingsContext";
+import ToggleButton from "../button/ToggleButton";
 
 type Props = {
   sortedFiles: StepchildFile[];
@@ -15,6 +18,8 @@ export default function FilesPanelHeader({
   selectedRowIds,
   setSelectedRowIds,
 }: Props) {
+  const { state, dispatch } = useFilesPanelSettings();
+
   const handleControlAllClick = () => {
     if (selectedRowIds.length === sortedFiles.length) {
       setSelectedRowIds([]);
@@ -42,6 +47,30 @@ export default function FilesPanelHeader({
   const areAllSelected = selectedRowIds.length === sortedFiles.length;
   const dataArrayForDownloadMenuButton = sortedFiles.map((file) => file.data);
 
+  const fileFormatToggleOptions = [
+    {
+      text: ".MIDI",
+      isSelected: state.defaultDownloadFormat === ".midi",
+      handleClick: () => {
+        dispatch({ type: "SET_DEFAULT_DOWNLOAD_FORMAT", payload: ".midi" });
+      },
+    },
+    {
+      text: ".CHILD",
+      isSelected: state.defaultDownloadFormat === ".child",
+      handleClick: () => {
+        dispatch({ type: "SET_DEFAULT_DOWNLOAD_FORMAT", payload: ".child" });
+      },
+    },
+    {
+      text: "None",
+      isSelected: state.defaultDownloadFormat === "none",
+      handleClick: () => {
+        dispatch({ type: "SET_DEFAULT_DOWNLOAD_FORMAT", payload: "none" });
+      },
+    },
+  ];
+
   return (
     <div className="flex justify-between items-center">
       <span className="font-slab text-56px text-left">Files</span>
@@ -50,12 +79,45 @@ export default function FilesPanelHeader({
           <SelectAllIcon selected={areAllSelected} />
           <span>{areAllSelected ? "Deselect All" : "Select All"}</span>
         </PixelButton>
-        {showActionButtons && (
-          <DownloadMenuButton
-            mode="multiple download"
-            data={dataArrayForDownloadMenuButton}
-          />
+        {showActionButtons && state.defaultDownloadFormat === "none" && (
+          <DropdownButton
+            text="Download Selected"
+            direction="downwards"
+            mode="fill"
+            showDropdownIcon={false}
+            openedText="Download Selected as"
+            IconComponent={<DownloadIcon className="bg-transparent" />}
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
+                <PixelButton mode="fill" size="small">
+                  .MIDI
+                </PixelButton>
+                <PixelButton mode="fill" size="small">
+                  .CHILD
+                </PixelButton>
+              </div>
+            </div>
+            <p className="text-12px font-regular text-textSecondary">
+              YOU CAN SET YOUR DEFAULT DOWNLOAD OPTION IN SETTINGS.
+            </p>
+          </DropdownButton>
         )}
+        {showActionButtons && state.defaultDownloadFormat !== "none" && (
+          <PixelButton
+            mode="fill"
+            size="large"
+            IconComponent={<DownloadIcon className="bg-transparent" />}
+          >
+            Download Selected
+          </PixelButton>
+        )}
+        <DropdownButton text={"Settings"} direction={"downwards"}>
+          <div className="leading-none flex flex-col gap-3">
+            <span className="w-max">Default file download type</span>
+            <ToggleButton toggleOptions={fileFormatToggleOptions} />
+          </div>
+        </DropdownButton>
       </div>
     </div>
   );
