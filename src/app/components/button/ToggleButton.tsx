@@ -18,7 +18,10 @@ export default function ToggleButton({ toggleOptions }: Props) {
   return (
     <div className="flex justify-stretch relative p-1">
       {toggleOptions.map((option, index) => (
-        <div className="relative flex w-full">
+        <div
+          className="relative flex w-full"
+          key={`${option.text}-toggle-option-${index}`}
+        >
           <Clickable
             key={index}
             additionalClasses={`relative flex z-[3] px-4 py-2 w-full ${

@@ -1,5 +1,5 @@
 import { StepchildFile } from "@/app/context/FilesContext";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import PixelButton from "../button/PixelButton";
 import SelectAllIcon from "../icons/SelectAllIcon";
 import DropdownButton from "../button/DropdownButton";
@@ -20,13 +20,13 @@ export default function FilesPanelHeader({
 }: Props) {
   const { state, dispatch } = useFilesPanelSettings();
 
-  const handleControlAllClick = () => {
+  const handleControlAllClick = useCallback(() => {
     if (selectedRowIds.length === sortedFiles.length) {
       setSelectedRowIds([]);
     } else {
       setSelectedRowIds(sortedFiles.map((file) => file.id));
     }
-  };
+  }, [selectedRowIds, sortedFiles, setSelectedRowIds]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -41,7 +41,7 @@ export default function FilesPanelHeader({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [sortedFiles, selectedRowIds]);
+  }, [sortedFiles, selectedRowIds, handleControlAllClick]);
 
   const showActionButtons = selectedRowIds.length > 0;
   const areAllSelected = selectedRowIds.length === sortedFiles.length;
