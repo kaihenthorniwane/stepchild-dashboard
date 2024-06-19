@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from "react";
 import { StepchildFile } from "../context/FilesContext";
 import FilesTable from "../components/data/FilesTable";
 import FilesPanelHeader from "../components/data/FilesPanelHeader";
+import { useFilesPanelSettings } from "../context/FilesPanelSettingsContext";
+import FilesGrid from "../components/data/FilesGrid";
 
 type Props = {
   files: StepchildFile[];
@@ -17,6 +19,8 @@ function isStepchildFileKey(key: string): key is keyof StepchildFile {
 }
 
 export default function FilesPanel({ files }: Props) {
+  const { state } = useFilesPanelSettings();
+
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [selectedRowIds, setSelectedRowIds] = useState<number[]>([]);
 
@@ -80,14 +84,25 @@ export default function FilesPanel({ files }: Props) {
         sortedFiles={sortedFiles}
         setSelectedRowIds={setSelectedRowIds}
       />
-      <FilesTable
-        sortedFiles={sortedFiles}
-        requestSort={requestSort}
-        sortConfig={sortConfig}
-        selectedRowIds={selectedRowIds}
-        handleRowClick={handleRowClick}
-        handleShiftRowClick={handleShiftRowClick}
-      />
+      {state.displayMode === "rows" && (
+        <FilesTable
+          sortedFiles={sortedFiles}
+          requestSort={requestSort}
+          sortConfig={sortConfig}
+          selectedRowIds={selectedRowIds}
+          handleRowClick={handleRowClick}
+          handleShiftRowClick={handleShiftRowClick}
+        />
+      )}
+      {state.displayMode === "grid" && (
+        <FilesGrid
+          sortedFiles={sortedFiles}
+          requestSort={requestSort}
+          selectedRowIds={selectedRowIds}
+          handleRowClick={handleRowClick}
+          handleShiftRowClick={handleShiftRowClick}
+        />
+      )}
     </div>
   );
 }

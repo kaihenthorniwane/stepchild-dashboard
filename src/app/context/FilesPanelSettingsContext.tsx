@@ -24,31 +24,6 @@ const defaultSettings: FilesPanelSettings = {
   displayMode: "rows",
 };
 
-const SETTINGS_STORAGE_KEY = "filesPanelSettings";
-
-const loadSettingsFromLocalStorage = (): FilesPanelSettings => {
-  if (typeof window !== "undefined") {
-    try {
-      const storedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
-      return storedSettings ? JSON.parse(storedSettings) : initialSettings;
-    } catch (error) {
-      console.error("Failed to load settings from localStorage:", error);
-      return initialSettings;
-    }
-  }
-  return initialSettings;
-};
-
-const saveSettingsToLocalStorage = (settings: FilesPanelSettings) => {
-  if (typeof window !== "undefined") {
-    try {
-      localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
-    } catch (error) {
-      console.error("Failed to save settings to localStorage:", error);
-    }
-  }
-};
-
 type Action =
   | {
       type: "SET_DEFAULT_DOWNLOAD_FORMAT";
@@ -88,19 +63,11 @@ export const FilesPanelSettingsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [state, dispatch] = useReducer(
-    settingsReducer,
-    initialSettings,
-    loadSettingsFromLocalStorage
-  );
+  const [state, dispatch] = useReducer(settingsReducer, initialSettings);
 
   const areSettingsDefault =
     state.defaultDownloadFormat === defaultSettings.defaultDownloadFormat &&
     state.displayMode === defaultSettings.displayMode;
-
-  useEffect(() => {
-    saveSettingsToLocalStorage(state);
-  }, [state]);
 
   return (
     <FilesPanelSettingsContext.Provider

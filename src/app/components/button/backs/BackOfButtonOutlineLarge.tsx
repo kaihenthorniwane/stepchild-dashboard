@@ -1,11 +1,16 @@
-export default function BackOfButtonOutlineLarge() {
+type Props = {
+  mode?: "outline" | "file";
+};
+
+export default function BackOfButtonOutlineLarge({ mode = "outline" }: Props) {
   return (
     <div
       className="grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
     w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[1]
     text-textPrimary group-hover/button:text-textSecondary"
     >
-      <TopLeft rotation={0} />
+      {mode === "file" && <FileTopLeft />}
+      {mode !== "file" && <TopLeft rotation={0} />}
       <Top rotation={0} />
       <TopLeft rotation={90} />
       <Left rotation={0} />
@@ -17,6 +22,22 @@ export default function BackOfButtonOutlineLarge() {
     </div>
   );
 }
+
+const FileTopLeft = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M14 4V14H4V12H6V10H8V8H10V6H12V4H14ZM14 2L14 0H16V14V16L0 16V14L2 14L2 12H4V10H6V8H8V6H10V4H12V2H14Z"
+    />
+  </svg>
+);
 
 const TopLeft = ({ rotation }: { rotation: number }) => (
   <svg

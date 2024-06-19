@@ -1,5 +1,5 @@
 type Props = {
-  mode: "fill" | "outline";
+  mode: "fill" | "outline" | "file";
 };
 
 export default function BackOfButtonFillLarge({ mode }: Props) {
@@ -14,7 +14,8 @@ export default function BackOfButtonFillLarge({ mode }: Props) {
         : " text-bgPrimary "
     }`}
     >
-      <TopLeft rotation={0} />
+      {mode === "file" && <FileTopLeft />}
+      {mode !== "file" && <TopLeft rotation={0} />}
       <Top rotation={0} />
       <TopLeft rotation={90} />
       <Left rotation={0} />
@@ -26,6 +27,22 @@ export default function BackOfButtonFillLarge({ mode }: Props) {
     </div>
   );
 }
+
+const FileTopLeft = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M14 0L14 2L12 2L12 4H10L10 6H8L8 8H6L6 10H4L4 12H2L2 14H0V16H2H4H6H8H10H12H14L16 16V14V0H14Z"
+    />
+  </svg>
+);
 
 const TopLeft = ({ rotation }: { rotation: number }) => (
   <svg
