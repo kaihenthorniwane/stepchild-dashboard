@@ -48,7 +48,7 @@ export default function GridActionButtons({ data, id }: Props) {
         )}
         <PixelButton mode="fill">Preview</PixelButton>
       </div>
-      <div className="absolute -top-10 right-2 left-2 bottom-2 overflow-hidden">
+      <div className="absolute -top-4 right-2 left-2 bottom-2 overflow-hidden">
         <GridDitherGroup />
       </div>
     </div>

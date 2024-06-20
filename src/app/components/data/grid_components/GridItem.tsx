@@ -55,9 +55,7 @@ export default function GridItem({
     >
       <div className="flex relative z-[3] flex-col h-full justify-center items-center gap-3.5">
         <span>{file.name}</span>
-        <span className="text-textSecondary break-all">
-          {formatPath(file.path)}
-        </span>
+
         <span className="text-12px font-regular text-textSecondary">
           {file.fileSize} bytes
         </span>
