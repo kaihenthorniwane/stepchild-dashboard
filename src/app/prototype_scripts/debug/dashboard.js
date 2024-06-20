@@ -102,22 +102,22 @@ const cmd =  {
     SEND_FILE_COUNT         :11
 };
 
-// let port;
-// let dumpButton;
-// let connectButton;
+let port;
+let dumpButton;
+let connectButton;
 
-// function connect(){
-//     port.connect();
-// }
+function connect(){
+    port.connect();
+}
 
-// function dumpFiles(){
-//     port.downloadFilesystem();
-// }
+function dumpFiles(){
+    port.downloadFilesystem();
+}
 
-// function setup(){
-//     port = new StepchildSerialInterface();
-//     connectButton = createButton("connect");
-//     connectButton.mousePressed(connect);
-//     dumpButton = createButton("dump files");
-//     dumpButton.mousePressed(dumpFiles);
-// }
+function setup(){
+    port = new StepchildSerialInterface();
+    connectButton = createButton("connect");
+    connectButton.mousePressed(connect);
+    dumpButton = createButton("dump files");
+    dumpButton.mousePressed(dumpFiles);
+}

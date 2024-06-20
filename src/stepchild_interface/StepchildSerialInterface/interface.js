@@ -1,6 +1,6 @@
 /*
 
-        Contains code for working with serial communication
+Contains code for working with serial communication
 
 */
 
@@ -34,7 +34,7 @@ class StepchildSerialInterface{
     logPortInfo(){
         if(this.port.opened()){
             console.log("----- Connected! ---------")
-            console.log("baud: "+this.baudRate);
+            console.log("baud: "+this.options.baudRate);
             let info = this.port.port.getInfo();
             console.log("Vendor ID:  "+info.usbVendorID);
             console.log("Product ID: "+info.usbProductID);

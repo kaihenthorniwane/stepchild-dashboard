@@ -4,11 +4,14 @@ import "./libraries/p5.webserial.js";
 import StepchildSerialInterface from "./interface.js"
 
 export const sketch = (p) => {
+  
+  let stepchildSerialPort;
+
   p.setup = () => {
-    const serialPort = new StepchildSerialInterface();
+    stepchildSerialPort = new StepchildSerialInterface();
+    console.log("hello from P5");
     p.noCanvas();
   };
-
   //draw is empty!
   p.draw = () => {
   };
