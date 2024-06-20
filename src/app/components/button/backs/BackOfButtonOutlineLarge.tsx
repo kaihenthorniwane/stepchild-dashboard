@@ -1,16 +1,20 @@
 type Props = {
-  mode?: "outline" | "file";
+  mode?: "outline" | "file" | "file light";
 };
 
 export default function BackOfButtonOutlineLarge({ mode = "outline" }: Props) {
   return (
     <div
-      className="grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
+      className={`grid grid-cols-[auto,1fr,auto] grid-rows-[auto,1fr,auto] 
     w-full h-full absolute left-0 top-0 right-0 bottom-0 z-[1]
-    text-textPrimary group-hover/button:text-textSecondary"
+    ${
+      mode !== "file light"
+        ? "text-textPrimary group-hover/button:text-textSecondary"
+        : "text-textTertiary"
+    }`}
     >
-      {mode === "file" && <FileTopLeft />}
-      {mode !== "file" && <TopLeft rotation={0} />}
+      {(mode === "file" || mode === "file light") && <FileTopLeft />}
+      {mode === "outline" && <TopLeft rotation={0} />}
       <Top rotation={0} />
       <TopLeft rotation={90} />
       <Left rotation={0} />

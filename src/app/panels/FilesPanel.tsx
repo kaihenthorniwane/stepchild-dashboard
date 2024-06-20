@@ -98,6 +98,7 @@ export default function FilesPanel({ files }: Props) {
         <FilesGrid
           sortedFiles={sortedFiles}
           requestSort={requestSort}
+          sortConfig={sortConfig}
           selectedRowIds={selectedRowIds}
           handleRowClick={handleRowClick}
           handleShiftRowClick={handleShiftRowClick}

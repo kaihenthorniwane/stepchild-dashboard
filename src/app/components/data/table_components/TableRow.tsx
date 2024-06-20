@@ -4,10 +4,7 @@ import TableCell from "./TableCell";
 import MusicFileIcon from "../../icons/MusicFileIcon";
 import ActionCell from "./ActionCell";
 import { TableLayout } from "../FilesTable";
-
-function formatPath(path: string): string {
-  return path.split("/")[path.split("/").length - 1];
-}
+import { formatPath } from "@/stepchild_interface/helper";
 
 type TableRowProps = {
   file: StepchildFile;

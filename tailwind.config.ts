@@ -39,6 +39,15 @@ const config: Config = {
           "99.9%": { transform: "translateX(2px)" },
           "100%": { transform: "translateX(0)" },
         },
+        "slide-in-bottom": {
+          "0%": { transform: "translateY(20px)" },
+          "33.3%": { transform: "translateY(20px)" },
+          "33.4%": { transform: "translateY(10px)" },
+          "66.6%": { transform: "translateY(10px)" },
+          "66.7%": { transform: "translateY(2px)" },
+          "99.9%": { transform: "translateY(2px)" },
+          "100%": { transform: "translateY(0)" },
+        },
         "up-down-2px": {
           "0%": { transform: "translateY(-2px)" },
           "50%": { transform: "translateY(-2px)" },
@@ -48,6 +57,7 @@ const config: Config = {
       },
       animation: {
         "slide-in-right": "slide-in-right 1s forwards",
+        "slide-in-bottom": "slide-in-bottom 1s forwards",
         "up-down-2px": "up-down-2px 1s infinite",
       },
     },

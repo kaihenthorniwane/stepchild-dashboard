@@ -8,6 +8,7 @@ type DropdownButtonProps = {
   text: string;
   openedText?: string;
   direction: "upwards" | "downwards";
+  horizontalDirection?: "left" | "right";
   children: React.ReactNode;
   mode?: "outline" | "fill";
   showIconWhenClosed?: boolean;
@@ -20,6 +21,7 @@ export default function DropdownButton({
   text,
   openedText,
   direction,
+  horizontalDirection = "left",
   children,
   mode = "outline",
   ancestorLevelToCheck,
@@ -28,9 +30,13 @@ export default function DropdownButton({
   IconComponent,
 }: DropdownButtonProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [autoDirection, setAutoDirection] = useState<
+  const [autoDirectionVertical, setAutoDirectionVertical] = useState<
     "upwards" | "downwards" | null
   >(null);
+  const [autoDirectionHorizontal, setAutoDirectionHorizontal] = useState<
+    "left" | "right" | null
+  >(null);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
@@ -47,9 +53,15 @@ export default function DropdownButton({
       const ancestorRect = ancestor.getBoundingClientRect();
       const xPixelsClose = 150;
       if (menuRect.bottom >= ancestorRect.bottom - xPixelsClose) {
-        setAutoDirection("upwards");
+        setAutoDirectionVertical("upwards");
       } else {
-        setAutoDirection("downwards");
+        setAutoDirectionVertical("downwards");
+      }
+      const ypixelsClose = 150;
+      if (menuRect.right >= ancestorRect.right - ypixelsClose) {
+        setAutoDirectionHorizontal("left");
+      } else {
+        setAutoDirectionHorizontal("right");
       }
     }
     setIsMenuOpen((prev) => !prev);
@@ -91,7 +103,7 @@ export default function DropdownButton({
         >
           <div className="relative z-[5] flex gap-3 items-center  px-5 py-0.5 ">
             {IconComponent && showIconWhenClosed && IconComponent}
-            <span>{text}</span>
+            <span className="w-full">{text}</span>
             {showDropdownIcon && (
               <SmallDropdownIcon key={`${text}-dropdown-icon`} isOpen={false} />
             )}
@@ -106,8 +118,15 @@ export default function DropdownButton({
       </button>
       {isMenuOpen && (
         <div
-          className={`absolute z-15 left-0 top-0 right-0 bottom-0 flex justify-end ${
-            direction === "upwards" || autoDirection === "upwards"
+          className={`absolute z-15 left-0 top-0 right-0 bottom-0 flex 
+          ${
+            horizontalDirection === "right" ||
+            autoDirectionHorizontal === "right"
+              ? "justify-start"
+              : "justify-end"
+          }
+          ${
+            direction === "upwards" || autoDirectionVertical === "upwards"
               ? "items-end"
               : ""
           }`}

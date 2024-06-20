@@ -14,3 +14,7 @@ function arrayBufferToString(buffer: ArrayBuffer) {
   const decoder = new TextDecoder("utf-8");
   return decoder.decode(buffer);
 }
+
+export function formatPath(path: string): string {
+  return path.split("/")[path.split("/").length - 1];
+}
