@@ -15,7 +15,7 @@ export default function GridActionButtons({ data, id }: Props) {
   return (
     <div className="absolute left-0 right-0 bottom-0 p-3 leading-normal z-20">
       <div
-        className="flex flex-col justify-end gap-2"
+        className="flex flex-col justify-end gap-2 relative z-[1]"
         onClick={(e) => e.stopPropagation()}
       >
         {state.defaultDownloadFormat === "none" && (
