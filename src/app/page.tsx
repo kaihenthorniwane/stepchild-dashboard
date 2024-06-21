@@ -3,7 +3,6 @@ import { useFiles } from "./context/FilesContext";
 import dynamic from "next/dynamic";
 import FilesPanel from "./panels/FilesPanel";
 // import EmptyStatePanel from "./panels/EmptyStatePanel";
-// import P5Component from "../stepchild_interface/StepchildSerialInterface/p5Component.js";
 
 export default function Home() {
   const { state } = useFiles();
@@ -28,9 +27,6 @@ export default function Home() {
             <EmptyStatePanel />
           </div>
         </div>
-      </div>
-      <div className="-z-50 absolute opacity-0 select-none pointer-events-none">
-        <P5Comp />
       </div>
     </>
   );

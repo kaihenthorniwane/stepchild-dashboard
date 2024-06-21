@@ -4,13 +4,12 @@ Contains code for working with serial communication
 
 */
 
-import p5 from 'p5';
-import "./libraries/p5.webserial.js";
+import * as webserial from "./libraries/p5.webserial.js";
 
 class StepchildSerialInterface{
     constructor(){
         this.connected = false;
-        this.port = p5.prototype.createSerial();
+        this.port = webserial.createSerial();
         this.options = {
             baudRate: 9600,
             bufferSize:255
